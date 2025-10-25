@@ -60,6 +60,13 @@ services:
         networks:
             - sistemascead-net
 
+    sistemascead-pdf:
+        image: gotenberg/gotenberg:8
+        container_name: sistemascead-pdf
+        restart: unless-stopped
+        networks:
+            - sistemascead-net
+
 volumes:
     sistemascead-backend_staticfiles:
     sistemascead-backend_site:
