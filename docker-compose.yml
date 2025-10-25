@@ -19,7 +19,7 @@ services:
 
     sistemascead-backend:
         build:
-            context: ./backend
+            context: ./sistemascead-backend/backend
         container_name: sistemascead-backend
         restart: unless-stopped
         environment:
