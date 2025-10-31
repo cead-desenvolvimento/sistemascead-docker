@@ -1,0 +1,75 @@
+services:
+    sistemascead-database:
+        build: ./database
+        container_name: sistemascead-database
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: ${DB_USER:-sistemascead}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME:-sistemascead}
+        volumes:
+            - /srv/volumes/sistemascead/postgresql:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-sistemascead}"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        networks:
+            - sistemascead-net
+
+    sistemascead-backend:
+        build:
+            context: ./backend
+        container_name: sistemascead-backend
+        restart: unless-stopped
+        environment:
+            - DB_HOST=sistemascead-database
+            - DB_NAME=${DB_NAME:-sistemascead}
+            - DB_USER=${DB_USER:-sistemascead}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - DJANGO_SETTINGS_MODULE=cead.settings
+        volumes:
+            - sistemascead-backend_staticfiles:/app/cead/staticfiles # Django staticfiles
+            - sistemascead-backend_site:/app/site # Documentacao p/ usuario (mkdocs)
+            - /media/truenas/proceg/documentos:/app/cead_documentos # Documentos candidatos
+        depends_on:
+            sistemascead-database:
+                condition: service_healthy
+        healthcheck:
+            test: ["CMD", "curl", "-f", "-I", "http://127.0.0.1:8000/"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        ports:
+            - "8000:8000"
+        networks:
+            - sistemascead-net
+
+    sistemascead-frontend:
+        build: ./frontend
+        container_name: sistemascead-frontend
+        restart: unless-stopped
+        volumes:
+            - sistemascead-backend_staticfiles:/app/staticfiles
+            - sistemascead-backend_site:/app/site
+        ports:
+            - "8080:80"
+        depends_on:
+            sistemascead-backend:
+                condition: service_healthy
+        networks:
+            - sistemascead-net
+
+    sistemascead-pdf:
+        image: gotenberg/gotenberg:8
+        container_name: sistemascead-pdf
+        restart: unless-stopped
+        networks:
+            - sistemascead-net
+
+volumes:
+    sistemascead-backend_staticfiles:
+    sistemascead-backend_site:
+
+networks:
+    sistemascead-net:
