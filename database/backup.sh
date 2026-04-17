@@ -30,7 +30,6 @@ fi
 log "Iniciando backup: $BACKUP_FILE"
 
 if docker exec "$CONTAINER_NAME" pg_dump -Fc -U "$PGUSER" "$PGDATABASE" | gzip -f > "$BACKUP_FILE"; then
-
     BACKUP_SIZE_BYTES=$(stat -c %s "$BACKUP_FILE" 2>/dev/null || echo 0)
     BACKUP_SIZE_MB=$(awk "BEGIN {mb=$BACKUP_SIZE_BYTES/1048576; printf \"%.2f\", mb}" | sed 's/\./,/')
     log "Backup finalizado (${BACKUP_SIZE_MB}MB)."
