@@ -59,6 +59,11 @@ EMAIL_USE_SSL=True
 EMAIL_HOST_USER=naoresponda.cead@ufjf.br
 EMAIL_HOST_PASSWORD=secreto
 DEFAULT_FROM_EMAIL=naoresponda.cead@ufjf.br
+
+MOODLE_DOMAINNAME=https://ead.ufjf.br
+MOODLE_TOKEN=secreto
+MOODLE_FUNCTIONNAME=core_user_get_users_by_field
+MOODLE_RESTFORMAT=json
 ```
 
 ## Criar os containers
