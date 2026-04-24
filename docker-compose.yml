@@ -38,7 +38,7 @@ services:
             DJANGO_SETTINGS_MODULE: "cead.settings"
         volumes:
             - sistemascead-backend_staticfiles:/app/cead/staticfiles # Django staticfiles
-            - sistemascead-backend_site:/app/site # Documentacao p/ usuario (zensical)
+            - sistemascead-backend_site:/app/site:ro # Documentacao p/ usuario (zensical)
             - /media/truenas/proceg/documentos:/app/cead_documentos # Documentos candidatos
         depends_on:
             sistemascead-database:
@@ -62,8 +62,8 @@ services:
         ports:
             - "127.0.0.1:8080:80"
         volumes:
-            - sistemascead-backend_staticfiles:/app/staticfiles
-            - sistemascead-backend_site:/app/site
+            - sistemascead-backend_staticfiles:/app/staticfiles:ro
+            - sistemascead-backend_site:/app/site:ro
         depends_on:
             sistemascead-backend:
                 condition: service_healthy
