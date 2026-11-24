@@ -1,4 +1,4 @@
-FROM postgres:18
+FROM postgres:19
 
 ENV TZ=America/Sao_Paulo
 
