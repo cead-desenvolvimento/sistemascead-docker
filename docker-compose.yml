@@ -71,7 +71,7 @@ services:
             - sistemascead-net
 
     sistemascead-pdf:
-        image: gotenberg/gotenberg:8
+        image: gotenberg/gotenberg:9
         container_name: sistemascead-pdf
         restart: unless-stopped
         networks:
