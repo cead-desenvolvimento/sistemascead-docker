@@ -85,4 +85,4 @@ networks:
     sistemascead-net:
         driver: bridge
         driver_opts:
-            com.docker.network.bridge.name: br-sistemas-cead
+            com.docker.network.bridge.name: br-sistemascead

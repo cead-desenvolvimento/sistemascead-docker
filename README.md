@@ -68,7 +68,7 @@ MOODLE_RESTFORMAT=json
 
 ## Nome fixo da bridge Docker
 
-A rede `sistemascead-net` tem o nome de bridge fixado em `br-sistemas-cead` via `driver_opts` no `docker-compose.yml`. Isso é necessário porque o _host_ Alpine usa nftables com regras de FORWARD explícitas referenciando esse nome — se o nome mudar (o que aconteceria se a rede fosse recriada sem essa opção), os _containers_ perdem acesso à internet.
+A rede `sistemascead-net` tem o nome de bridge fixado em `br-sistemascead` via `driver_opts` no `docker-compose.yml`. Isso é necessário porque o _host_ Alpine usa nftables com regras de FORWARD explícitas referenciando esse nome — se o nome mudar (o que aconteceria se a rede fosse recriada sem essa opção), os _containers_ perdem acesso à internet. O nome tem 15 caracteres, limite para interfaces de rede Linux.
 
 ## Criar os containers
 
